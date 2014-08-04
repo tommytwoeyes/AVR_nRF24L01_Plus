@@ -186,19 +186,19 @@ typedef uint8_t radio_register_t;
 // 1 = TX FIFO is full.
 // NOTE: the FIFOs can contain up to three payloads (max size 32 bytes
 // each), so "NOT FULL" != "EMPTY"
-#define	TX_FIFO_FULL	5
+#define	TX_FULL		5
 // TX FIFO EMPTY status
 // 0 = TX FIFO is not empty.
 // 1 = TX FIFO is empty.
-#define	TX_FIFO_EMPTY
+#define	TX_EMPTY		4
 // RX FIFO FULL
 // 0 = RX FIFO is not full
 // 1 = RX FIFO is full
-#define	RX_FIFO_FULL	1
+#define	RX_FULL		1
 // RX FIFO EMPTY
 // 0 = RX FIFO is not empty
 // 1 = RX FIFO is empty
-#define	RX_FIFO_EMPTY	0
+#define	RX_EMPTY		0
 
 
 /* Radio SPI Commands */
