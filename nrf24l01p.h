@@ -202,7 +202,7 @@ typedef uint8_t radio_register_t;
 
 //// DYNPD Register
 // Enable dynamic payload length for data pipes 0-5.
-// Requires EN_DPL and EDAA_P5 bits set.
+// Requires EN_DPL and ENAA_P5 bits set.
 #define	DPL_P5		5
 #define	DPL_P4		4
 #dsefine	DPL_P3		3
