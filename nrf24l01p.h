@@ -200,6 +200,23 @@ typedef uint8_t radio_register_t;
 // 1 = RX FIFO is empty
 #define	RX_EMPTY		0
 
+//// DYNPD Register
+// Enable dynamic payload length for data pipes 0-5.
+// Requires EN_DPL and EDAA_P5 bits set.
+#define	DPL_P5		5
+#define	DPL_P4		4
+#dsefine	DPL_P3		3
+#define	DPL_P2		2
+#define	DPL_P1		1
+#define	DPL_P0		0
+
+//// FEATURE Register
+#define	EN_DPL		2			# Enables Dynamic Payload Length
+// Enables Payload with ACK packets.
+// See pg 63 of datasheet for usage notes (note d)
+#define	EN_ACK_PAY	1
+// Enables the W_TX_PAYLOAD_NO_ACK command.
+#define	EN_DYN_ACK	0
 
 /* Radio SPI Commands */
 #define	R_REGISTER		0x00			# Read Register
