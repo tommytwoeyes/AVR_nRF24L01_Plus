@@ -1,6 +1,9 @@
 /**
- * Get compass heading readings from HMC6352 Digital Compass
- * and send them to desktop PC using USART.
+ * File: transmitter.c
+ * Author: Tom Malone
+ * 
+ * Program for AVR microcontroller acting as the controller for the 
+ * transmitting nRF24L01+ module.
  */
 
 //------ Includes ------/ 
