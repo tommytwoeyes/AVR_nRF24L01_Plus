@@ -8,13 +8,7 @@
 #include <util/delay.h>
 #include <avr/power.h>
 
-#include "pinDefines.h"
 #include "USART.h"
-#include "I2C_master_noninterrupt_driven.h"
-
-//------ Definitions ------//
-// Define HMC6352 address, etc
-
 
 
 int main(void) {
