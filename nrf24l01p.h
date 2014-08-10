@@ -107,5 +107,12 @@ void Radio_Init();
  * \param enable Enable or disable the pipe.
  */
  void Radio_Configure_Rx(RADIO_PIPE pipe, uint8_t* address, ON_OFF enable);
+ 
+ /**
+ * Configure the radio transceiver.
+ * \param dr The data rate at which the radio will transmit and receive data (1 Mbps or 2 Mbps).
+ * \param power The transmitter's power output.
+ */
+ void Radio_Configure(RADIO_DATA_RATE dr, RADIO_TX_POWER power);
 
 #endif /* NRF24L01P_H_ */
