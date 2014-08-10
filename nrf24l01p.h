@@ -135,5 +135,13 @@ void Radio_Init();
  *              Radio_Transmit returns RADIO_TX_MAX_RT.
  */
  void Radio_Transmit(radiopacket_t* payload, RADIO_TX_WAIT wait);
+ 
+ /**
+ * Get the next packet from the Rx FIFO.
+ * \param payload If there is a packet to copy out of the Rx FIFO, then its payload will be placed in this structure.
+ *              If the FIFO is empty, then this structure will be left alone.
+ * \return See enum RADIO_RX_STATUS for values.
+ */
+ RADIO_RX_STATUS Radio_Receive(radiopacket_t* buffer);
 
 #endif /* NRF24L01P_H_ */
