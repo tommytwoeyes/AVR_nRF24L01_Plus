@@ -1,5 +1,6 @@
 /**
- * nRF24L01+ library 
+ * nRF24L01+ library for Atmel AVR ATmega48/88/168/328 microcontrollers
+ * 
  * File: nrf24l01p.c
  * Author: Tom Malone
  *
