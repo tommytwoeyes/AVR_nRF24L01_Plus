@@ -3,10 +3,10 @@
  * File: nrf24l01p.h
  * Author: Tom Malone
  *
- * Inspired (heavily) by:
+ * Inspired by:
  * 	Neil MacMillan:  http://nrqm.ca/nrf24l01/
- * 	Stefan Engelke:  http://tinkerer.eu/AVRLib/nRF24L01/
  * 	Brennan:         http://blog.diyembedded.com/
+ * 	Stefan Engelke:  http://tinkerer.eu/AVRLib/nRF24L01/
  *
 */
 

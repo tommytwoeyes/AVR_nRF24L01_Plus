@@ -10,8 +10,8 @@
  *
 */
 
-#ifndef	NRF24L01P_H_
-#define	NRF24L01P_H_
+#ifndef	NRF24L01P_MNEMONICS_H_
+#define	NRF24L01P_MNEMONICS_H_
 
 // This should be &ed with the register values defined below when they
 // are masked into the R_REGISTER and W_REGISTER instructions, to make
@@ -253,4 +253,4 @@ typedef uint8_t radio_register_t;
 #define	W_TX_PAYLOAD_NO_ACK	0xB0	# 1 to 32 bytes (LSByte first)
 #define	NOP				0xFF			# No operation
 
-#endif /* NRF24L01P_H_
+#endif /* NRF24L01P_MNEMONICS_H_ */
