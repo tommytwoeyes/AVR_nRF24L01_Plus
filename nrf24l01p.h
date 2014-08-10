@@ -149,5 +149,10 @@ void Radio_Init();
  * that were transmitted successfully, ranging from 0 to 100.
  */
  uint8_t Radio_Success_Rate();
+ 
+ /**
+ * Flush the radio's Rx and Tx FIFOs.
+ */
+ void Radio_Flush();
 
 #endif /* NRF24L01P_H_ */
