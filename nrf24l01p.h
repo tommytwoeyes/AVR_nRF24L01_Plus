@@ -21,26 +21,26 @@
 typedef uint8_t radio_register_t;
 
 /* Memory Map */
-#define	CONFIG		0x00		# Configure interrupts, PWR, RX/TX status, and CRC
-#define	EN_AA		0x01		# Enable "Auto Acknowledgment" feature
+#define	CONFIG			0x00		# Configure interrupts, PWR, RX/TX status, and CRC
+#define	EN_AA			0x01		# Enable "Auto Acknowledgment" feature
 #define	EN_RXADDR		0x02		# Enabled or disable the RX pipes
 #define	SETUP_AW		0x03		# Set address width (must be the same on all radios)
-#define	SETUP_RETR	0x04		# Set retry delay and number of retries for pipes using Enhanced Shockburst
-#define	RF_CH		0x05		# Set the channel to use, from the 2.4 GHz ISM band.
+#define	SETUP_RETR		0x04		# Set retry delay and number of retries for pipes using Enhanced Shockburst
+#define	RF_CH			0x05		# Set the channel to use, from the 2.4 GHz ISM band.
 #define	RF_SETUP		0x06		# Set radio data rate, output power, and LNA gain
-#define	STATUS		0x07		# Interrupt status, TX FIFO register full, and number of RX pipe that received a packet (in RX mode, of course)
-#define	OBSERVE_TX	0x08		# Count lost and resent packets
-#define	RPD			0x09		# Snapshot of current received power level in the channel
+#define	STATUS			0x07		# Interrupt status, TX FIFO register full, and number of RX pipe that received a packet (in RX mode, of course)
+#define	OBSERVE_TX		0x08		# Count lost and resent packets
+#define	RPD				0x09		# Snapshot of current received power level in the channel
 // Receive address bytes (this (PIPE 0) and following 5 lines)
 // (see documentation for explanation of how they fit 6 5-byte addresses
 // into 40 bits).  P0 is also used for auto-ack handling.
-#define	RX_ADDR_P0	0x0A		# Receive Address DATA PIPE 0
-#define	RX_ADDR_P1	0x0B		# Receive Address DATA PIPE 1
-#define	RX_ADDR_P2	0x0C		# Receive Address DATA PIPE 2
-#define	RX_ADDR_P3	0x0D		# Receive Address DATA PIPE 3
-#define	RX_ADDR_P4	0x0E		# Receive Address DATA PIPE 4
-#define	RX_ADDR_P5	0x0F		# Receive Address DATA PIPE 5
-#define	TX_ADDR		0x10		# Transmit destination address
+#define	RX_ADDR_P0		0x0A		# Receive Address DATA PIPE 0
+#define	RX_ADDR_P1		0x0B		# Receive Address DATA PIPE 1
+#define	RX_ADDR_P2		0x0C		# Receive Address DATA PIPE 2
+#define	RX_ADDR_P3		0x0D		# Receive Address DATA PIPE 3
+#define	RX_ADDR_P4		0x0E		# Receive Address DATA PIPE 4
+#define	RX_ADDR_P5		0x0F		# Receive Address DATA PIPE 5
+#define	TX_ADDR			0x10		# Transmit destination address
 // Payload data width for each of the Rx pipes (0x01 bytes to 0x20
 // bytes, or 0x00 if pipe is not used)
 #define	RX_PW_P0		0x11		# Payload Data Width for PIPE 0 (# of bites per payload)
@@ -52,39 +52,39 @@ typedef uint8_t radio_register_t;
 // Auto-retransmit status (cf. REUSE_TX_PL instruction), Tx FIFO
 // full/empty, Rx FIFO full/empty
 // (The Rx FIFO is a 3-packet queue shared by all six pipes)
-#define	FIFO_STATUS	0x17		# FIFO Status Register
-#define	DYNPD		0x1C		# Enable dynamic payload length
-#define	FEATURE		0x1D		# Feature Register
+#define	FIFO_STATUS		0x17		# FIFO Status Register
+#define	DYNPD			0x1C		# Enable dynamic payload length
+#define	FEATURE			0x1D		# Feature Register
 
 
 /* Register Bit Mnemonics [ bit mask shift values, to be used with _BV() ] */
 //// CONFIG Register
-#define	MASK_RX_DR	6			# Turn off RX data ready interrupt: 0 - Rx data-ready interrupt is sent to IRQ pin.  1 - Interrupt is not sent to IRQ pin.
-#define	MASK_TX_DS	5			# Turn off TX data sent interrupt: 0 - Tx data-sent interrupt is sent to IRQ pin.  1 - Interrupt is not sent to IRQ pin.
-#define	MASK_MAX_RT	4			# Turn off "Maximum number of packet resend retries reached" interrupt: 0 - Max-retries-reached interrupt is sent to IRQ pin.  1 - Interrupt is not sent to IRQ pin.
-#define	EN_CRC		3			# Enable Cyclic Redundancy Check: 0 - Disable automatic CRC.  1 - Enable automatic CRC.
+#define	MASK_RX_DR		6			# Turn off RX data ready interrupt: 0 - Rx data-ready interrupt is sent to IRQ pin.  1 - Interrupt is not sent to IRQ pin.
+#define	MASK_TX_DS		5			# Turn off TX data sent interrupt: 0 - Tx data-sent interrupt is sent to IRQ pin.  1 - Interrupt is not sent to IRQ pin.
+#define	MASK_MAX_RT		4			# Turn off "Maximum number of packet resend retries reached" interrupt: 0 - Max-retries-reached interrupt is sent to IRQ pin.  1 - Interrupt is not sent to IRQ pin.
+#define	EN_CRC			3			# Enable Cyclic Redundancy Check: 0 - Disable automatic CRC.  1 - Enable automatic CRC.
 #define	CRCO			2			# CRC encoding scheme: 0 - Use 1-byte CRC.  1 - Use 2-byte CRC.
-#define	PWR_UP		1			# POWER STATUS: 0 - Power down the radio.  1 - Power up the radio
-#define	PRIM_RX		0			# RX/TX STATUS: 0 - Radio is a transmitter.  1 - Radio is a receiver.
+#define	PWR_UP			1			# POWER STATUS: 0 - Power down the radio.  1 - Power up the radio
+#define	PRIM_RX			0			# RX/TX STATUS: 0 - Radio is a transmitter.  1 - Radio is a receiver.
 
 //// EN_AA Register
-#define	ENAA_P5		5			# Enable (1)/Disable (0) Auto Acknowledgment feature for DATA PIPE 5
-#define	ENAA_P4		4			# Enable Auto Acknowledgment feature for DATA PIPE 4
-#define	ENAA_P3		3			# Enable Auto Acknowledgment feature for DATA PIPE 3
-#define	ENAA_P2		2			# Enable Auto Acknowledgment feature for DATA PIPE 2
-#define	ENAA_P1		1			# Enable Auto Acknowledgment feature for DATA PIPE 1
-#define	ENAA_P0		0			# Enable Auto Acknowledgment feature for DATA PIPE 0
+#define	ENAA_P5			5			# Enable (1)/Disable (0) Auto Acknowledgment feature for DATA PIPE 5
+#define	ENAA_P4			4			# Enable Auto Acknowledgment feature for DATA PIPE 4
+#define	ENAA_P3			3			# Enable Auto Acknowledgment feature for DATA PIPE 3
+#define	ENAA_P2			2			# Enable Auto Acknowledgment feature for DATA PIPE 2
+#define	ENAA_P1			1			# Enable Auto Acknowledgment feature for DATA PIPE 1
+#define	ENAA_P0			0			# Enable Auto Acknowledgment feature for DATA PIPE 0
 
 //// EN_RXADDR Register
-#define	ERX_P5		5			# Enable (1)/Disable (0) DATA PIPE 5
-#define	ERX_P4		4			# Enable DATA PIPE 4
-#define	ERX_P3		3			# Enable DATA PIPE 3
-#define	ERX_P2		2			# Enable DATA PIPE 2
-#define	ERX_P1		1			# Enable DATA PIPE 1
-#define	ERX_P0		0			# Enable DATA PIPE 0
+#define	ERX_P5			5			# Enable (1)/Disable (0) DATA PIPE 5
+#define	ERX_P4			4			# Enable DATA PIPE 4
+#define	ERX_P3			3			# Enable DATA PIPE 3
+#define	ERX_P2			2			# Enable DATA PIPE 2
+#define	ERX_P1			1			# Enable DATA PIPE 1
+#define	ERX_P0			0			# Enable DATA PIPE 0
 
 //// SETUP_AW Register
-#define	AW			0			# Address width (bits 1:0): 01 = 3 bytes, 10 = 4 bytes, 11 = 5 bytes
+#define	AW				0			# Address width (bits 1:0): 01 = 3 bytes, 10 = 4 bytes, 11 = 5 bytes
 
 //// SETUP_RETR Register
 // ARD = Auto Retransmit delay (bits 7:4)
@@ -94,14 +94,14 @@ typedef uint8_t radio_register_t;
 //				0011 = Wait 1000 + 86 us
 //				....
 //				1111 = Wait 4000 + 86 us
-#define	ARD			4
+#define	ARD				4
 // Auto Retransmit count (bits 3:0)
 //				0000 = Retransmit disabled
 //				0001 = Up to 1 retransmit on fail of auto-ack
 //				0010 = Up to 2 retransmits on fail of auto-ack
 //				....
 //				1111 = Up to 15 retransmits ...
-#define	ARC			0			# Auto Retransmit Count
+#define	ARC				0			# Auto Retransmit Count
 
 //// We skip the RF_CH register, because it's pretty straightforward.
 //// Load the channel number into bits 6:0.
@@ -113,36 +113,36 @@ typedef uint8_t radio_register_t;
 // Select between the high-speed data rates. This bit is doesn't care
 // if RF_DR_LOW is set.
 // Encoding:
-//				00 = 1Mbps
-//				01 = 2Mbps
-//				10 = 250kbps
-//				11 = Reserved
-#define	RF_DR_HIGH	3
+//					00 = 1Mbps
+//					01 = 2Mbps
+//					10 = 250kbps
+//					11 = Reserved
+#define	RF_DR_HIGH		3
 // Radio TX power (bits 2:1). The unit dBm is decibels relative to 1 mW.
-//				00 = -18 dBm
-//				01 = -12 dBm
-//				10 = - 6 dBm
-//				11 =   0 dBm
-#define	RF_PWR		1
+//					00 = -18 dBm
+//					01 = -12 dBm
+//					10 = - 6 dBm
+//					11 =   0 dBm
+#define	RF_PWR			1
 
 //// STATUS Register
 // RX data ready interrupt.
 // 0 = RX data ready interrupt was not triggered.
 // 1 = RX data ready interrupt was triggered.
 // Write 1 to clear after interrupt.
-#define	RX_DR		6
+#define	RX_DR			6
 // TX data sent interrupt.
 // 0 = TX data sent interrupt was not triggered.
 // 1 = TX data sent interrupt was triggered.
 // Write 1 to clear after interrupt.
-#define	TX_DS		5
+#define	TX_DS			5
 // Max number of retries sent interrupt.
 // 0 = Max retries interrupt was not triggered.
 // 1 = Max retries interurupt was triggered.
 // Write 1 to clear after interrupt.
 // NOTE: If the MAX_RT interrupt is triggered, this needs to be cleared
 // before radio can be used again.
-#define	MAX_RT		4
+#define	MAX_RT			4
 // Number of the data pipe that just received data (bits 3:1)
 // 000 = pipe 0
 // 001 = pipe 1
@@ -152,11 +152,11 @@ typedef uint8_t radio_register_t;
 // 101 = pipe 5
 // 110 = not used
 // 111 = All RX FIFOs are empty.
-#define	RX_P_NO		1
+#define	RX_P_NO			1
 // TX FIFO status
 // 0 = There are available locations in TX FIFO
 // 1 = TX FIFO is full
-#define	TX_FULL		0
+#define	TX_FULL			0
 
 //// OBSERVE_TX Register
 // Lost packet count (bits 7:4). Counts up to 15 lost packets
@@ -167,7 +167,7 @@ typedef uint8_t radio_register_t;
 // Resent packet count (bits 3:0). Counts the packets that were resent
 // in Enhanced Shockburst mode.
 // Reset by sending a new packets.
-#define	ARC_CNT		0
+#define	ARC_CNT			0
 
 //// Skip the RDP Register, because it has only 1 bit.
 // 0 = No received power detected.
@@ -186,7 +186,7 @@ typedef uint8_t radio_register_t;
 // 1 = TX FIFO is full.
 // NOTE: the FIFOs can contain up to three payloads (max size 32 bytes
 // each), so "NOT FULL" != "EMPTY"
-#define	TX_FULL		5
+#define	TX_FULL			5
 // TX FIFO EMPTY status
 // 0 = TX FIFO is not empty.
 // 1 = TX FIFO is empty.
@@ -194,7 +194,7 @@ typedef uint8_t radio_register_t;
 // RX FIFO FULL
 // 0 = RX FIFO is not full
 // 1 = RX FIFO is full
-#define	RX_FULL		1
+#define	RX_FULL			1
 // RX FIFO EMPTY
 // 0 = RX FIFO is not empty
 // 1 = RX FIFO is empty
@@ -203,25 +203,25 @@ typedef uint8_t radio_register_t;
 //// DYNPD Register
 // Enable dynamic payload length for data pipes 0-5.
 // Requires EN_DPL and ENAA_P5 bits set.
-#define	DPL_P5		5
-#define	DPL_P4		4
+#define	DPL_P5			5
+#define	DPL_P4			4
 #dsefine	DPL_P3		3
-#define	DPL_P2		2
-#define	DPL_P1		1
-#define	DPL_P0		0
+#define	DPL_P2			2
+#define	DPL_P1			1
+#define	DPL_P0			0
 
 //// FEATURE Register
-#define	EN_DPL		2			# Enables Dynamic Payload Length
+#define	EN_DPL			2			# Enables Dynamic Payload Length
 // Enables Payload with ACK packets.
 // See pg 63 of datasheet for usage notes (note d)
-#define	EN_ACK_PAY	1
+#define	EN_ACK_PAY		1
 // Enables the W_TX_PAYLOAD_NO_ACK command.
-#define	EN_DYN_ACK	0
+#define	EN_DYN_ACK		0
 
 /* Radio SPI Commands */
 #define	R_REGISTER		0x00			# Read Register
 #define	W_REGISTER		0x20			# Write Register
-#define	R_RX_PAYLOAD		0x61			# Read receive payload (clears FIFO; LSByte first)
+#define	R_RX_PAYLOAD	0x61			# Read receive payload (clears FIFO; LSByte first)
 #define	W_TX_PAYLOAD		0xA0			# Write transmit payload
 #define	FLUSH_TX			0xE1			# Flush transmit FIFO
 #define	FLUSH_RX			0xE2			# Flush receive FIFO (should not be used while an ack is being transmitted)
@@ -246,7 +246,7 @@ typedef uint8_t radio_register_t;
 // A write operation always starts at byte 0.
 // NOTE: The bits in the FEATURE Register (table on pg 63 of datasheet)
 // have to be set.
-#define	W_ACK_PAYLOAD		0xA8			# 1 to 32 bytes (LSByte first)
+#define	W_ACK_PAYLOAD	0xA8			# 1 to 32 bytes (LSByte first)
 // Used in TX mode. Diables AUTOACK on this specific packet.
 // NOTE: The bits in the FEATURE Register (table on pg 63 of datasheet)
 // have to be set.
