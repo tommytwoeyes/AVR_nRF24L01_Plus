@@ -77,4 +77,35 @@ typedef enum _ed {					// Enable/Disable
 
 void Radio_Init();
 
+/**
+ * Configure one of the radio's six Rx pipes.
+ * This configures a pipe's address and enables or disables the pipe.  Pipes 0 and 1 are enabled by default, and pipes 2-5 are
+ *              disabled by default.  The configuration for pipe 0 will be changed while the radio is transmitting, to facilitate auto-
+ *              ack.  It will be changed back when the transmission is completed.
+ * \param pipe The pipe to configure.
+ * \param address The 1- or 5-byte address to give the pipe.  For pipes 0 and 1 all five bytes can be different, but
+ *              pipes 2-5 share the four most significant bytes of pipe 1's address.  The LSB of each pipe's address must be unique.
+ *              For example:
+ *                              Pipe 0: 0x0123456789
+ *                              Pipe 1: 0x9876543210
+ *                              Pipe 2: 0x98765432AB
+ *                              Pipe 3: 0x98765432BC
+ *                              Pipe 4: 0x98765432CD
+ *                              Pipe 5: 0x98765432DE
+ *              If pipe 0 or 1 is being configured, then address must be a 5-byte array.  If the other four pipes are being configured,
+ *              then the first byte of address is used as the LSB of the pipe's address (i.e. you only pass a 1-byte address, with the
+ *              four MSBytes of the pipe's address left implied).  For example, this will set the first four pipe addresses above:
+ *                              uint8_t address[5] = {0x01, 0x23, 0x45, 0x67, 0x89};
+ *                              Radio_Configure_Rx(RADIO_PIPE_0, address, ENABLE);
+ *                              address = {0x98, 0x76, 0x54, 0x32, 0x10};
+ *                              Radio_Configure_Rx(RADIO_PIPE_1, address, ENABLE);
+ *                              address[0] = 0xAB;
+ *                              Radio_Configure_Rx(RADIO_PIPE_2, address, ENABLE);
+ *                              address[0] = 0xBC;
+ *                              Radio_Configure_Rx(RADIO_PIPE_3, address, ENABLE);
+ *                              ...
+ * \param enable Enable or disable the pipe.
+ */
+ void Radio_Configure_Rx(RADIO_PIPE pipe, uint8_t* address, ON_OFF enable);
+
 #endif /* NRF24L01P_H_ */
