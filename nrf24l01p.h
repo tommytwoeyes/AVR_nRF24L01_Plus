@@ -15,10 +15,14 @@
 #ifndef	NRF24L01P_H_
 #define	NRF24L01P_H_
 
+#include <stddef.h>
+#include <string.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "nrf24l01p_mnemonics.h"
+#include "packet.h"
+#include "spi.h"
 
 #define RADIO_ADDRESS_LENGTH	5
 
