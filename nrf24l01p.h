@@ -75,4 +75,6 @@ typedef enum _ed {					// Enable/Disable
 	ENABLE	= 1,
 } ON_OFF;
 
+void Radio_Init();
+
 #endif /* NRF24L01P_H_ */
