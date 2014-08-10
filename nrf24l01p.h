@@ -114,5 +114,11 @@ void Radio_Init();
  * \param power The transmitter's power output.
  */
  void Radio_Configure(RADIO_DATA_RATE dr, RADIO_TX_POWER power);
+ 
+ /**
+ * Set the radio transmitter's address.
+ * \param The 5-byte address that packets will be sent to.
+ */
+ void Radio_Set_Tx_Addr(uint8_t* address);
 
 #endif /* NRF24L01P_H_ */
