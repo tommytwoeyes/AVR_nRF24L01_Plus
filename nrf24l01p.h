@@ -1,5 +1,7 @@
 /**
- * nRF24L01+ library prototypes
+ * nRF24L01+ library prototypes for Atmel AVR ATmega48/88/168/328 
+ * microcontrollers
+ * 
  * File: nrf24l01p.h
  * Author: Tom Malone
  *
