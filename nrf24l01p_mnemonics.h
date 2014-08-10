@@ -1,5 +1,6 @@
 /**
  * nRF24L01+ Register Definitions
+ * 
  * File: nrf24l01p.h
  * Author: Tom Malone
  *
