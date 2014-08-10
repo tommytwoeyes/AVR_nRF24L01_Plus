@@ -120,5 +120,20 @@ void Radio_Init();
  * \param The 5-byte address that packets will be sent to.
  */
  void Radio_Set_Tx_Addr(uint8_t* address);
+ 
+ /**
+ * Transmit some data to another station.
+ * \param payload The data packet to transmit.
+ * \param wait If this is RADIO_WAIT, then Radio_Transmit will not return until the transmission is completed
+ *              successfully or fails.  If this is RADIO_DO_NOT_WAIT then Radio_Transmit will return as soon as the
+ *              payload is loaded onto the radio and the transmission is started (in this case, Radio_Is_Transmitting
+ *              can be used to determine if the radio is busy).
+ * \return If wait was RADIO_DO_NOT_WAIT, then Radio_Transmit always returns RADIO_TX_SUCCESS.  If wait was
+ *              RADIO_WAIT and the transmission was successful (TX_DS interrupt asserted, i.e. the ack packet was
+ *              received), Radio_Transmit returns RADIO_TX_SUCCESS.  If wait was RADIO_WAIT and the transmission failed
+ *              (MAX_RT interrupt asserted, i.e. no ack was received and the maximum number of retries were sent), then
+ *              Radio_Transmit returns RADIO_TX_MAX_RT.
+ */
+ void Radio_Transmit(radiopacket_t* payload, RADIO_TX_WAIT wait);
 
 #endif /* NRF24L01P_H_ */
