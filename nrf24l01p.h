@@ -1,5 +1,5 @@
 /**
- * nRF24L01+ Register Definitions
+ * nRF24L01+ library prototypes
  * File: nrf24l01p.h
  * Author: Tom Malone
  *
