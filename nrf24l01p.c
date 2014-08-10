@@ -29,3 +29,9 @@
 #define IRQ_PORT		PORTB
 #define IRQ_PIN			PB0			// PCINT0
 
+// Macros for selecting and enabling the radio
+#define CSN_HIGH()		CSN_PORT |= (1 << CSN_PIN);
+#define CSN_LOW()		CSN_PORT &= ~(1 << CSN_PIN);
+#define CE_HIGH()		CE_PORT |= (1 << CE_PIN);
+#define CE_LOW()		CE_PORT &= ~(1 << CE_PIN);
+
