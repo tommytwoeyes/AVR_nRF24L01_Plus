@@ -143,5 +143,11 @@ void Radio_Init();
  * \return See enum RADIO_RX_STATUS for values.
  */
  RADIO_RX_STATUS Radio_Receive(radiopacket_t* buffer);
+ 
+ /**
+ * Calculate the radio's transmit success rate over the last 16 packets.  The return value is the percentage of packets
+ * that were transmitted successfully, ranging from 0 to 100.
+ */
+ uint8_t Radio_Success_Rate();
 
 #endif /* NRF24L01P_H_ */
