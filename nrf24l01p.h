@@ -49,6 +49,7 @@ typedef enum _radio_tx_power {
 typedef enum _radio_dr {
 	RADIO_1MBPS		= 0,		// Megabytes, not Megabits
 	RADIO_2MBPS		= 1,
+	RADIO_250KBPS	= 2,
 } RADIO_DATA_RATE;
 
 // Radio RX status
