@@ -295,6 +295,134 @@ static void configure_registers()
 	send_instruction(FLUSH_RX, NULL, NULL, 0);
 }
 
+/**
+ * Configure radio's RX Pipe addresses
+ * 
+ * \param pipe		The specific pipe to address (pipe defined in RADIO_PIPE enum)
+ * \param address	The Pipe's address
+ * \param enable	Enable the pipe? 1 == yes, 0 == no
+ * 
+ * Pipe 0 default address		0xe7e7e7e7e7
+ * Pipe 1 default address		0xc2c2c2c2c2
+ * Pipe 2 default address		0xc2c2c2c2c3 (disabled)
+ * Pipe 3 default address		0xc2c2c2c2c4 (disabled)
+ * Pipe 4 default address		0xc2c2c2c2c5 (disabled)
+ * Pipe 5 default address		0xc2c2c2c2c6 (disabled)
+ */
+void Radio_Configure_Rx(RADIO_PIPE pipe, uint8_t* address, uint8_t enable)
+{
+	uint8_t value;
+	uint8_t use_aa = 1;
+	uint8_t payload_width = 32;
+	if (payload_width  < 1 || payload_width > 32 || pipe < RADIO_PIPE_0 || pipe > RADIO_PIPE_5) return;
+	
+	// Store the Pipe 0 address so that it can be overwritten when transmitting with Auto-Ack enabled
+	if (pipe == RADIO_PIPE_0)
+	{
+		rx_pipe0_address[0] = address[0];
+		rx_pipe0_address[1] = address[1];
+		rx_pipe0_address[2] = address[2];
+		rx_pipe0_address[3] = address[3];
+		rx_pipe0_address[4] = address[4];
+	}
+	
+	// Set the address. We set this stuff even if the pipe is being disabled,
+	// because, for example, the transmitter needs pipe 0 to have the same 
+	// address as the TX address for Auto-Ack to work, even if Pipe 0 is 
+	// disabled
+	set_register(RX_ADDR_P0 + pipe, address, pipe > RADIO_PIPE_1 ? 1 : ADDRESS_LENGTH);
+	
+	// Set Auto-Ack
+	get_register(EN_AA, &value, 1);
+	if (use_aa)
+		value |= (1 << pipe);
+	else
+		value &= ~(1 << pipe);
+	set_register(EN_AA, &value, 1);
+	
+	// Set the pipe's payload width. If the pipe is being disabled, then 
+	// the payload width is set to 0.
+	value = enable ? payload_width : 0;
+	set_register(RX_PW_P0 + pipe, &value, 1);
+	rx_pipe_widths[pipe] = value;
+	
+	// Enable or disable the pipe
+	get_register(EN_RXADDR, &value, 1);
+	if (enable)
+		value |= (1 << pipe);
+	else 
+		value &= ~(1 << pipe);
+	set_register(EN_RXADDR, &value, 1);
+}
+
+/**
+ * Set Radio TX address
+ * 
+ * \param address		The transmitter address
+ * 
+ * Transmitter default address		0xe7e7e7e7e7
+ */
+void Radio_Set_Tx_Addr(uint8_t* address)
+{
+	tx_address[0] = address[0];
+	tx_address[1] = address[1];
+	tx_address[2] = address[2];
+	tx_address[3] = address[3];
+	tx_address[4] = address[4];
+	set_register(TX_ADDR, address, ADDRESS_LENGTH);
+}
+
+/**
+ * Configure radio Data Rate and TX Power
+ * 
+ * \param data_rate		The radio's data rate (from enum RADIO_DATA_RATE)
+ * \param power			The radio transmitter's power level (from enum RADIO_TX_POWER)
+ */
+void Radio_Configure(RADIO_DATA_RATE data_rate, RADIO_TX_POWER power, uint8_t* tx_address)
+{
+	uint8_t value;
+	
+	if (power < RADIO_LOWEST_POWER || power > RADIO_HIGHEST_POWER || data_rate < RADIO_1MBPS || data_rate > RADIO_250KBPS) return;
+	
+	// Set the address
+	if (tx_address != 0xe7e7e7e7e7)
+	{
+		Radio_Set_Tx_Addr(address);
+	}
+	
+	// Set the data rate and power bits in the RF_SETUP register
+	get_register(RF_SETUP, &value, 1);
+	
+	value |= (3 << RF_PWR);		// Set the power bits so that the & will mask the pwer value properly
+	value &= (power << RF_PWR);	// Mask the power value into the RF status byte
+	
+	if (data_rate)
+	{
+		value |= (1 << RF_DR_HIGH);
+		
+		// Compare datasheets for nRF24L01 and nRF24L01+:
+		// Based on the differences in the register maps for RF_SETUP 
+		// register between versions, spedifically the splitting of 
+		// the RF_DR bit into RF_DR_LOW and RF_DR_HIGH bits, coupled with 
+		// the comment about the RF_DR_HIGH bit "is not caring" about the 
+		// value of the RF_DR_LOW bit, I am guessing that if a value is set 
+		// for RF_DR_LOW, it overrides the value for RF_DR_HIGH. 
+		//
+		// Whatever they meant, if RADIO_DATA_RATE is set to 250kbps, I 
+		// am setting it in both RF_DR_LOW and RF_DR_HIGH
+		if (data_rate == RADIO_250KBPS)
+		{
+			value |= (1 << RF_DR_LOW);
+		}
+	}
+	else // Set default (0 == 1Mbps)
+	{
+		value &= ~(1 << RF_DR_HIGH);
+	}
+	
+	set_register(RF_SETUP, &value, 1);
+}
+
 /* Interrupt handler */
 ISR(INT_VECTOR) // See #definition at top
 {
