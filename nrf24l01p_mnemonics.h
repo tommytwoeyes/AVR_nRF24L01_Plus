@@ -112,7 +112,9 @@ typedef uint8_t radio_register_t;
 #define	RF_DR_LOW		5			# Set RF Data Rate to 250kbps. See RF_DR_HIGH for encoding.
 #define	PLL_LOCK		4			# Force PLL lock signal.  See [http://en.wikipedia.org/wiki/Phase-locked_loop].  This shouldn't be set (only used in test).
 // Select between the high-speed data rates. This bit is doesn't care
-// if RF_DR_LOW is set.
+// if RF_DR_LOW is set 
+// (I am not really sure what that means - I just copied it from the 
+//  datasheet verbatim).
 // Encoding:
 //					00 = 1Mbps
 //					01 = 2Mbps
